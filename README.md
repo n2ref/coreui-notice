@@ -1,0 +1,2 @@
+# coreui-notice
+CoreUI Notice
