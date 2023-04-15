@@ -1,0 +1,44 @@
+{
+  "name": "coreui-notice",
+  "version": "1.0.0",
+  "description": "CoreUI Notice",
+  "scripts": {
+    "build_all": "gulp build_js && gulp build_css",
+
+    "build_js": "gulp build_js",
+    "build_js_fast": "gulp build_js_fast",
+    "build_css": "gulp build_css",
+    "build_css_fast": "gulp build_css_fast",
+
+    "build_watch": "gulp build_watch",
+    "text_js": "eslint -c .eslintrc.json --max-warnings 100 --ext .js ./src/js"
+  },
+  "dependencies": {
+    "@material/snackbar": "14.*"
+  },
+  "devDependencies": {
+    "gulp": "4.*",
+    "gulp-concat": "2.*",
+    "gulp-sourcemaps": "3.*",
+    "gulp-uglify": "3.0.*",
+    "gulp-clean-css": "4.*",
+    "eslint": "8.38.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shabuninil/coreui-notice.git"
+  },
+  "keywords": [
+    "js",
+    "frontend",
+    "framework",
+    "notice",
+    "bootstrap"
+  ],
+  "author": "shabuninil",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shabuninil/coreui-notice/issues"
+  },
+  "homepage": "https://github.com/shabuninil/coreui-notice#readme"
+}
