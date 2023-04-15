@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html id="page-content">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoreUI Notice</title>
+
+    <link href="dist/page.min.css" rel="stylesheet"/>
+    <script src="dist/page.min.js"></script>
+
+    <link href="dist/coreui-notice.min.css" rel="stylesheet"/>
+    <script src="dist/coreui-notice.min.js"></script>
+
+    <script src="src/js/examples.js"></script>
+</head>
+<body data-bs-spy="scroll" data-bs-target="#docs-sidenav">
+
+    <section class="text-left">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 mb-5">
+                    <header>
+                        <nav class="navbar navbar-expand-lg navbar-default">
+                            <div class="container-fluid">
+                                <a class="navbar-brand" href="#">CoreUI</a>
+                                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>
+                                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                        <li class="nav-item"><a class="nav-link" href="https://shabuninil.github.io/coreui-panel">Panel</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="https://shabuninil.github.io/coreui-form">Form</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="https://shabuninil.github.io/coreui-tabs">Tabs</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="https://shabuninil.github.io/coreui-layout">Layout</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="https://shabuninil.github.io/coreui-table">Table</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="https://shabuninil.github.io/coreui-info">Info</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="https://shabuninil.github.io/coreui-modal">Modal</a></li>
+                                        <li class="nav-item"><span class="nav-link active">Notice</span></li>
+                                        <li class="nav-item"><a class="nav-link" href="https://shabuninil.github.io/coreui-alert">Alert</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="https://shabuninil.github.io/coreui-confirm">Confirm</a></li>
+                                    </ul>
+
+                                    <ul class="nav navbar-nav navbar-right">
+                                        <li class="nav-item"><a class="nav-link" href="https://github.com/shabuninil/coreui-notice">GitHub</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </nav>
+                    </header>
+                </div>
+                <div class="col-lg-2">
+                    <div id="docs-sidenav" class="hidden-xs hidden-sm hidden-md d-none d-lg-block"
+                         data-bs-spy="affix" data-bs-offset-top="90" data-bs-offset-bottom="70">
+                        <ul class="nav">
+                            <li><a href="#download">Download</a></li>
+                            <li>
+                                <a href="#examples">Examples</a>
+                                <ul class="nav">
+                                    <li><a href="#example-simple">Simple notice</a></li>
+                                    <li><a href="#example-positions-options">Positions</a></li>
+                                    <li><a href="#example-styles-options">Styles</a></li>
+                                    <li><a href="#example-actions">Actions</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#options">Options</a></li>
+                            <li><a href="#methods">Methods</a></li>
+                            <li><a href="#settings">Settings</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-10">
+                    <h2 id="download">Download</h2>
+                    <div>
+                        <p>
+                            You can download a minimized version of the library or get the full source code at github.com.
+                        </p>
+                        <a class="btn btn-secondary" href="https://github.com/shabuninil/coreui-notice/archive/master.zip">Download source</a>
+                    </div>
+
+
+                    <h2 class="section-margin">Install with npm</h2>
+                    <pre><code class="bash">$ npm install coreui-notice</code></pre>
+
+
+                    <h2 class="section-margin">Требования</h2>
+                    <p>
+                        Для корректной работы на странице необходимо наличие:
+                        <a href="https://jquery.com" target="_blank">jquery</a>
+                    </p>
+
+
+                    <h2 id="examples" class="section-margin">Examples</h2>
+                    <div>
+                        <h3 id="example-simple">Simple notice</h3>
+                        <div>
+                            <div class="content-example">
+                                <button class="btn btn-sm btn-secondary" id="notice-default">Default</button>
+                                <button class="btn btn-sm btn-warning" id="notice-warning">Warning</button>
+                                <button class="btn btn-sm btn-danger" id="notice-danger">Danger</button>
+                                <button class="btn btn-sm btn-success" id="notice-success">Success</button>
+                            </div>
+                            <div class="content-markup">
+                                <pre><code class="html">
+    &lt;button class="btn btn-sm btn-secondary" id="notice-default"&gt;Default&lt;/button&gt;
+    &lt;button class="btn btn-sm btn-warning" id="notice-warning"&gt;Warning&lt;/button&gt;
+    &lt;button class="btn btn-sm btn-danger" id="notice-danger"&gt;Danger&lt;/button&gt;
+    &lt;button class="btn btn-sm btn-success" id="notice-success"&gt;Success&lt;/button&gt;
+
+    &lt;script&gt;
+        $('#notice-default').click(function () {
+            CoreUI.notice.info("Hello, world! This is a toast message.");
+        });
+
+        $('#notice-warning').click(function () {
+            CoreUI.notice.warning("Hello, world! This is a toast message.");
+        });
+
+        $('#notice-danger').click(function () {
+            CoreUI.notice.danger("Hello, world! This is a toast message.");
+        });
+
+        $('#notice-success').click(function () {
+            CoreUI.notice.success("Hello, world! This is a toast message.");
+        });
+    &lt;/script&gt;
+                                </code></pre>
+                            </div>
+                        </div>
+                        <br><br>
+
+
+                        <h3 id="example-positions-options">Positions</h3>
+                        <div>
+                            <div class="content-example">
+                                <button class="btn btn-sm btn-secondary" id="notice-position-top-left">Top left</button>
+                                <button class="btn btn-sm btn-secondary" id="notice-position-top-center">Top center</button>
+                                <button class="btn btn-sm btn-secondary" id="notice-position-top-right">Top right</button>
+                                <button class="btn btn-sm btn-secondary" id="notice-position-bottom-left">Button left</button>
+                                <button class="btn btn-sm btn-secondary" id="notice-position-bottom-center">Button center</button>
+                                <button class="btn btn-sm btn-secondary" id="notice-position-bottom-right">Button right</button>
+                            </div>
+                            <div class="content-markup">
+                                <pre><code class="html">
+    &lt;button class="btn btn-sm btn-secondary" id="notice-position-top-left"&gt;Top left&lt;/button&gt;
+    &lt;button class="btn btn-sm btn-secondary" id="notice-position-top-right"&gt;Top right&lt;/button&gt;
+    &lt;button class="btn btn-sm btn-secondary" id="notice-position-top-center"&gt;Top center&lt;/button&gt;
+    &lt;button class="btn btn-sm btn-secondary" id="notice-position-bottom-center"&gt;Button center&lt;/button&gt;
+    &lt;button class="btn btn-sm btn-secondary" id="notice-position-bottom-left"&gt;Button left&lt;/button&gt;
+    &lt;button class="btn btn-sm btn-secondary" id="notice-position-bottom-right"&gt;Button right&lt;/button&gt;
+
+    &lt;script&gt;
+        $('#notice-position-top-left').click(function () {
+            CoreUI.notice.info("Hello, world! This is a toast message.", { position: 'top-left' });
+        });
+        $('#notice-position-top-center').click(function () {
+            CoreUI.notice.info("Hello, world! This is a toast message.", { position: 'top-center' });
+        });
+        $('#notice-position-top-right').click(function () {
+            CoreUI.notice.info("Hello, world! This is a toast message.", { position: 'top-right' });
+        });
+        $('#notice-position-bottom-left').click(function () {
+            CoreUI.notice.info("Hello, world! This is a toast message.", { position: 'bottom-left' });
+        });
+        $('#notice-position-bottom-center').click(function () {
+            CoreUI.notice.info("Hello, world! This is a toast message.", { position: 'bottom-center' });
+        });
+        $('#notice-position-bottom-right').click(function () {
+            CoreUI.notice.info("Hello, world! This is a toast message.", { position: 'bottom-right' });
+        });
+    &lt;/script&gt;
+                                </code></pre>
+                            </div>
+                        </div>
+                        <br><br>
+
+
+                        <h3 id="example-styles-options">Styles</h3>
+                        <div>
+                            <div class="content-example">
+                                <button class="btn btn-sm btn-secondary" id="notice-custom-colors">Custom colors</button>
+                                <button class="btn btn-sm btn-secondary" id="notice-icon-info"><i class="bi bi-info"></i> Icon</button>
+                                <button class="btn btn-sm btn-success" id="notice-icon-check"><i class="bi bi-check"></i> Icon</button>
+                                <button class="btn btn-sm btn-warning" id="notice-icon-triangle"><i class="bi bi-exclamation-triangle"></i> Icon</button>
+                            </div>
+                            <div class="content-markup">
+                                <pre><code class="html">
+    &lt;button class="btn btn-sm btn-secondary" id="notice-custom-colors"&gt;Custom colors&lt;/button&gt;
+    &lt;button class="btn btn-sm btn-secondary" id="notice-icon-info"&gt;&lt;i class="bi bi-info"&gt;&lt;/i&gt; Icon&lt;/button&gt;
+    &lt;button class="btn btn-sm btn-success" id="notice-icon-check"&gt;&lt;i class="bi bi-check"&gt;&lt;/i&gt; Icon&lt;/button&gt;
+    &lt;button class="btn btn-sm btn-warning" id="notice-icon-triangle"&gt;&lt;i class="bi bi-exclamation-triangle"&gt;&lt;/i&gt; Icon&lt;/button&gt;
+
+    &lt;script&gt;
+        $('#notice-custom-colors').click(function () {
+            CoreUI.notice.info("Hello, world! This is a toast message.", {
+                messageColor: '#ffffffd9',
+                bgColor: '#712cf9',
+            });
+        });
+        $('#notice-icon-info').click(function () {
+            CoreUI.notice.info("Hello, world! This is a toast message.", { icon: 'bi bi-info' });
+        });
+        $('#notice-icon-check').click(function () {
+            CoreUI.notice.success("Hello, world! This is a toast message.", { icon: 'bi bi-check' });
+        });
+        $('#notice-icon-triangle').click(function () {
+            CoreUI.notice.warning("Hello, world! This is a toast message.", { icon: 'bi bi-exclamation-triangle' });
+        });
+    &lt;/script&gt;
+                                </code></pre>
+                            </div>
+                        </div>
+                        <br><br>
+
+
+                        <h3 id="example-actions">Actions</h3>
+                        <div>
+                            <div class="content-example">
+                                <button class="btn btn-sm btn-secondary" id="notice-actions-btn">Action button</button>
+                                <button class="btn btn-sm btn-secondary" id="notice-actions-timer">Timer</button>
+                            </div>
+                            <div class="content-markup">
+                                <pre><code class="html">
+    &lt;button class="btn btn-sm btn-secondary" id="notice-actions-btn"&gt;Action button&lt;/button&gt;
+    &lt;button class="btn btn-sm btn-secondary" id="notice-actions-timer"&gt;Timer&lt;/button&gt;
+
+    &lt;script&gt;
+        $('#notice-actions-btn').click(function () {
+            CoreUI.notice.info("Hello, world! This is a toast message.", {
+                actionBtnText: 'Повторить',
+                onAction: function (notice) {
+                    notice.hide();
+                    CoreUI.notice.success("Hello, world! This is a toast message.");
+                },
+                onClose: function () {
+                    console.log('close')
+                },
+                onClosed: function () {
+                    console.log('closed')
+                }
+            });
+        });
+        $('#notice-actions-timer').click(function () {
+            let notice = CoreUI.notice.info("Timer: 5", {
+                timeout: 0
+            });
+
+            let time       = 4;
+            let intervalId = setInterval(function () {
+                notice.setMessage("Timer: " + time);
+                time--;
+                if (time < 0) {
+                    notice.hide();
+                    clearInterval(intervalId);
+                }
+            }, 1000);
+        });
+    &lt;/script&gt;
+                                </code></pre>
+                            </div>
+                        </div>
+                        <br><br>
+
+                    </div>
+
+
+                    <h2 id="options" class="section-margin">Options</h2>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped js-options-table">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>type</th>
+                                <th>default</th>
+                                <th>description</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>id</th> <td>string</td> <td></td>
+                                <td>Идентификатор уведомления</td>
+                            </tr>
+                            <tr>
+                                <th>timeout</th> <td>number</td> <td>6000</td>
+                                <td>Время в миллисекундах до закрытия уведомления. Можно установить 0 для отмены закрытия</td>
+                            </tr>
+                            <tr>
+                                <th>position</th> <td>string</td> <td>top-left</td>
+                                <td>Положение сообщения на странице. Доступные варианты: <code>top-left, top-center, top-right, bottom-left, bottom-center, bottom-right</code></td>
+                            </tr>
+                            <tr>
+                                <th>message</th> <td>string</td> <td></td>
+                                <td>Текст сообщения</td>
+                            </tr>
+                            <tr>
+                                <th>messageColor</th> <td>string</td> <td></td>
+                                <td>Цвет текста в сообщении</td>
+                            </tr>
+                            <tr>
+                                <th>bgColor</th> <td>string</td> <td>#333</td>
+                                <td>Цвет фона сообщения</td>
+                            </tr>
+                            <tr>
+                                <th>icon</th> <td>string</td> <td></td>
+                                <td>Класс для установки иконки для сообщения</td>
+                            </tr>
+                            <tr>
+                                <th>actionBtnText</th> <td>string</td> <td></td>
+                                <td>Тест для кнопки с действием</td>
+                            </tr>
+                            <tr>
+                                <th>cancelBtn</th> <td>bool</td> <td>true</td>
+                                <td>Наличие кнопки закрытия уведомления</td>
+                            </tr>
+                            <tr>
+                                <th>onClose</th> <td>function</td> <td></td>
+                                <td>Событие при начале закрытия уведомления</td>
+                            </tr>
+                            <tr>
+                                <th>onClosed</th> <td>function</td> <td></td>
+                                <td>Событие при завершении закрытия уведомления</td>
+                            </tr>
+                            <tr>
+                                <th>onAction</th> <td>function</td> <td></td>
+                                <td>Событие при нажатии на кнопку действия</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    <h2 id="methods" class="section-margin">Methods</h2>
+                    <div>
+                        <code>let notice = CoreUI.notice.info( message, options )</code>
+                        <p>Показ сообщения</p>
+
+                        <code>let notice = CoreUI.notice.warning( message, options )</code>
+                        <p>Показ сообщения c предупреждением</p>
+
+                        <code>let notice = CoreUI.notice.danger( message, options )</code>
+                        <p>Показ сообщения с критическим предупреждением</p>
+
+                        <code>let notice = CoreUI.notice.success( message, options )</code>
+                        <p>Показ сообщения с положительным событием</p>
+
+                        <code>let notice = CoreUI.notice.get( id )</code>
+                        <p>Получение сообщения по его id</p>
+
+                        <code>notice.getId()</code>
+                        <p>Получение id сообщения</p>
+
+                        <code>notice.setMessage( message )</code>
+                        <p>Установка нового текста сообщения</p>
+
+                        <code>notice.hide()</code>
+                        <p>Закрытие сообщения</p>
+
+                        <code>CoreUI.settings( options )</code>
+                        <p>Установка настроек по умолчанию для сообщений</p>
+                    </div>
+
+
+                    <h2 id="settings" class="section-margin">Settings</h2>
+                    <p>Настройки по умолчанию</p>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped js-options-table">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>type</th>
+                                <th>default</th>
+                                <th>description</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>limit</th> <td>number</td> <td>3</td>
+                                <td>Максимальное одновременное количество сообщений</td>
+                            </tr>
+                            <tr>
+                                <th>top</th> <td>number</td> <td>50</td>
+                                <td>Отступ в пикселях от верха страницы</td>
+                            </tr>
+                            <tr>
+                                <th>bottom</th> <td>number</td> <td>50</td>
+                                <td>Отступ в пикселях от низа страницы</td>
+                            </tr>
+                            <tr>
+                                <th>position</th> <td>string</td> <td>top-left</td>
+                                <td>Положение сообщения на странице. Доступные варианты: <code>top-left, top-center, top-right, bottom-left, bottom-center, bottom-right</code></td>
+                            </tr>
+                            <tr>
+                                <th>container</th> <td>string</td> <td>body</td>
+                                <td>Контейнер для создания уведомлений</td>
+                            </tr>
+                            <tr>
+                                <th>infoColor</th> <td>string</td> <td></td>
+                                <td>Цвет текста для информационных сообщений</td>
+                            </tr>
+                            <tr>
+                                <th>infoBgColor</th> <td>string</td> <td></td>
+                                <td>Цвет фона для информационных сообщений</td>
+                            </tr>
+                            <tr>
+                                <th>warningColor</th> <td>string</td> <td>#000000</td>
+                                <td>Цвет текста для сообщений с предупреждением</td>
+                            </tr>
+                            <tr>
+                                <th>warningBgColor</th> <td>string</td> <td>#ffc107</td>
+                                <td>Цвет фона для сообщений с предупреждением</td>
+                            </tr>
+                            <tr>
+                                <th>dangerColor</th> <td>string</td> <td></td>
+                                <td>Цвет текста для критических сообщений</td>
+                            </tr>
+                            <tr>
+                                <th>dangerBgColor</th> <td>string</td> <td>#dc3545</td>
+                                <td>Цвет фона для критических сообщений</td>
+                            </tr>
+                            <tr>
+                                <th>successColor</th> <td>string</td> <td></td>
+                                <td>Цвет текста для успешных сообщений</td>
+                            </tr>
+                            <tr>
+                                <th>successBgColor</th> <td>string</td> <td>#198754</td>
+                                <td>Цвет фона для успешных сообщений</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="buffer-content"></div>
+    </section>
+
+    <footer>
+        <section class="copyright">
+            <div class="container">
+                <span class="float-start">shabuninil24@gmail.com</span>
+                <span class="float-end">Code licensed under the GNU License</span>
+            </div>
+        </section>
+    </footer>
+</body>
+</html>

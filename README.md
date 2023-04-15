@@ -1,2 +1,1 @@
-# coreui-notice
-CoreUI Notice
+# CoreUI Notice
