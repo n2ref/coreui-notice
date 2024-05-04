@@ -1,5 +1,5 @@
 
-import '../../node_modules/ejs/ejs.min';
+import 'ejs/ejs.min';
 import coreuiNoticeUtils   from "./coreui.notice.utils";
 import coreuiNoticeTpl     from "./coreui.notice.templates";
 import coreuiNoticePrivate from "./coreui.notice.private";
