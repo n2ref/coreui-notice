@@ -1,103 +1,138 @@
 
-var CoreUI = typeof CoreUI !== 'undefined' ? CoreUI : {};
+import coreuiNoticeUtils    from "./coreui.notice.utils";
+import coreuiNoticeInstance from "./coreui.notice.instance";
 
-CoreUI.notice = {
+
+let coreuiNotice = {
 
     _instances: {},
+    _positions: {},
+
     _settings: {
         limit: 3,
         top: 50,
         bottom: 50,
         position: 'top-right', // {top,bottom}-{left-center-right}
-        container: 'body',
-        infoColor: '',
-        infoBgColor: '',
-        warningColor: '#000000',
-        warningBgColor: '#ffc107',
-        dangerColor: '',
-        dangerBgColor: '#dc3545',
-        successColor: '',
-        successBgColor: '#198754',
-    },
-
-
-
-    /**
-     * @param settings
-     */
-    settings: function(settings) {
-
-        CoreUI.notice._settings = $.extend({}, this._settings, settings);
+        container: 'body'
     },
 
 
     /**
+     * Уведомление default
      * @param message
      * @param options
-     * @returns {CoreUI.notice.instance}
+     * @returns {object}
+     */
+    default: function (message, options) {
+
+        options = coreuiNoticeUtils.isObject(options) ? options : {};
+        options.type    = 'default';
+        options.message = message;
+
+        return this.create(options);
+    },
+
+
+    /**
+     * Уведомление info
+     * @param message
+     * @param options
+     * @returns {object}
      */
     info: function (message, options) {
 
-        options = typeof options === 'object' ? options : {};
-        options.message      = message;
-        options.messageColor = options.hasOwnProperty('messageColor') ? options.messageColor : this._settings.infoColor;
-        options.bgColor      = options.hasOwnProperty('bgColor') ? options.bgColor : this._settings.infoBgColor;
+        options = coreuiNoticeUtils.isObject(options) ? options : {};
+        options.type    = 'info';
+        options.message = message;
 
-        return this._create(options);
+        return this.create(options);
     },
 
 
     /**
+     * Уведомление primary
      * @param message
      * @param options
-     * @returns {CoreUI.notice.instance}
+     * @returns {object}
+     */
+    primary: function (message, options) {
+
+        options = coreuiNoticeUtils.isObject(options) ? options : {};
+        options.type    = 'primary';
+        options.message = message;
+
+        return this.create(options);
+    },
+
+
+    /**
+     * Уведомление secondary
+     * @param message
+     * @param options
+     * @returns {object}
+     */
+    secondary: function (message, options) {
+
+        options = coreuiNoticeUtils.isObject(options) ? options : {};
+        options.type    = 'secondary';
+        options.message = message;
+
+        return this.create(options);
+    },
+
+
+    /**
+     * Уведомление warning
+     * @param message
+     * @param options
+     * @returns {object}
      */
     warning: function (message, options) {
 
-        options = typeof options === 'object' ? options : {};
-        options.message      = message;
-        options.messageColor = options.hasOwnProperty('messageColor') ? options.messageColor : this._settings.warningColor;
-        options.bgColor      = options.hasOwnProperty('bgColor') ? options.bgColor : this._settings.warningBgColor;
+        options = coreuiNoticeUtils.isObject(options) ? options : {};
+        options.type    = 'warning';
+        options.message = message;
 
-        return this._create(options);
+        return this.create(options);
     },
 
 
     /**
+     * Уведомление danger
      * @param message
      * @param options
-     * @returns {CoreUI.notice.instance}
+     * @returns {object}
      */
     danger: function (message, options) {
 
-        options = typeof options === 'object' ? options : {};
-        options.message      = message;
-        options.messageColor = options.hasOwnProperty('messageColor') ? options.messageColor : this._settings.dangerColor;
-        options.bgColor      = options.hasOwnProperty('bgColor') ? options.bgColor : this._settings.dangerBgColor;
+        options = coreuiNoticeUtils.isObject(options) ? options : {};
+        options.type    = 'danger';
+        options.message = message;
 
-        return this._create(options)
-    },
-
-
-    /**s
-     * @param message
-     * @param options
-     * @returns {CoreUI.notice.instance}
-     */
-    success: function (message, options) {
-
-        options = typeof options === 'object' ? options : {};
-        options.message      = message;
-        options.messageColor = options.hasOwnProperty('messageColor') ? options.messageColor : this._settings.successColor;
-        options.bgColor      = options.hasOwnProperty('bgColor') ? options.bgColor : this._settings.successBgColor;
-
-        return this._create(options);
+        return this.create(options)
     },
 
 
     /**
+     * Уведомление success
+     * @param {string} message
+     * @param {object} options
+     * @returns {object}
+     */
+    success: function (message, options) {
+
+        options = coreuiNoticeUtils.isObject(options) ? options : {};
+        options.type    = 'success';
+        options.message = message;
+
+        return this.create(options);
+    },
+
+
+    /**
+     * Получение экземпляра уведомления
      * @param {string} id
-     * @returns {CoreUI.info.instance|null}
+     * @returns {object|null}
      */
     get: function (id) {
 
@@ -105,7 +140,7 @@ CoreUI.notice = {
             return null;
         }
 
-        if ($('.coreui-notice-' + this._instances[id])[0]) {
+        if ( ! $('#coreui-notice-' + id)[0]) {
             delete this._instances[id];
             return null;
         }
@@ -115,13 +150,29 @@ CoreUI.notice = {
 
 
     /**
-     * @param options
-     * @returns {CoreUI.notice.instance}
+     * Установка настроек
+     * @param {object} settings
+     */
+    setSettings: function(settings) {
+
+        this._settings = $.extend(true, {}, this._settings, settings);
+    },
+
+
+    /**
+     * Создание уведомления
+     * @param {object} options
+     * @returns {object}
      * @private
      */
-    _create: function (options) {
+    create: function (options) {
 
-        let position  = options.hasOwnProperty('position') ? options.position : this._settings.position;
+        options = coreuiNoticeUtils.isObject(options) ? options : {};
+
+        let position = options.hasOwnProperty('position') && typeof options.position === 'string'
+            ? options.position
+            : this._settings.position;
+
         let container = $(".coreui-notice-container.position-" + position);
 
         if ( ! container[0]) {
@@ -138,39 +189,40 @@ CoreUI.notice = {
             }
 
 
-            $(this._settings.container).append(
-                '<div class="coreui-notice-container position-' + position + '" style="' + stylesContainer.join(';') + '"></div>'
-            );
-            container = $(".coreui-notice-container.position-" + position);
+            container = $('<div class="coreui-notice-container position-' + position + '" style="' + stylesContainer.join(';') + '"></div>');
+            $(this._settings.container).append(container);
         }
 
 
-        if (this._instances.hasOwnProperty(position)) {
-            let noticesId = Object.keys(this._instances[position]);
+        if (this._positions.hasOwnProperty(position)) {
+            let noticesId = this._positions[position];
             if (noticesId.length >= this._settings.limit) {
 
-                let noticeId = noticesId[0];
-                let notice   = this._instances[position][noticeId];
+                let notice = this.get(noticesId[0]);
 
-                if ( ! container.find('.coreui-notice-' + noticeId)[0]) {
-                    delete this._instances[position][noticeId];
+                if (notice) {
+                    notice.hide();
                 }
 
-                notice.hide();
+                delete this._instances[noticesId[0]];
+                this._positions[position].splice(0, 1);
             }
         }
 
 
-        let instance = $.extend({}, this.instance);
+        let instance = $.extend(true, {}, coreuiNoticeInstance);
         instance.init(options instanceof Object ? options : {});
 
 
-        if ( ! this._instances.hasOwnProperty(position)) {
-            this._instances[position] = {};
+
+        if ( ! this._positions.hasOwnProperty(position)) {
+            this._positions[position] = [];
         }
 
-        let infoId = instance.getId();
-        this._instances[position][infoId] = instance;
+        let noticeId = instance.getId();
+
+        this._positions[position].push(noticeId);
+        this._instances[noticeId] = instance;
 
 
         if (['bottom-left', 'bottom-center', 'bottom-right'].indexOf(position) >= 0) {
@@ -179,40 +231,8 @@ CoreUI.notice = {
             container.append(instance.render());
         }
 
-        instance.initEvents();
-
         return instance;
-    },
-
-
-    /**
-     * @returns {string}
-     * @private
-     */
-    _hashCode: function() {
-        return this._crc32((new Date().getTime() + Math.random()).toString()).toString(16);
-    },
-
-
-    /**
-     * @param str
-     * @returns {number}
-     * @private
-     */
-    _crc32: function (str) {
-
-        for (var a, o = [], c = 0; c < 256; c++) {
-            a = c;
-            for (var f = 0; f < 8; f++) {
-                a = 1 & a ? 3988292384 ^ a >>> 1 : a >>> 1
-            }
-            o[c] = a
-        }
-
-        for (var n = -1, t = 0; t < str.length; t++) {
-            n = n >>> 8 ^ o[255 & (n ^ str.charCodeAt(t))]
-        }
-
-        return (-1 ^ n) >>> 0;
     }
 }
+
+export default coreuiNotice;

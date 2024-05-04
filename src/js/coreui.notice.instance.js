@@ -1,149 +1,139 @@
 
-CoreUI.notice.instance = {
+import '../../node_modules/ejs/ejs.min';
+import coreuiNoticeUtils   from "./coreui.notice.utils";
+import coreuiNoticeTpl     from "./coreui.notice.templates";
+import coreuiNoticePrivate from "./coreui.notice.private";
+
+
+let coreuiNoticeInstance = {
+
+    _id: null,
+    _buttons: [],
 
     _options: {
         id: '',
+        type: 'default',
         timeout: 6000,
         message: '',
-        messageColor: '',
-        bgColor: '#333',
+        textColor: null,
+        bgColor: null,
         icon: '',
-        actionBtnText: '',
-        cancelBtn: true,
-        onClose: null,
-        onClosed: null,
-        onAction: null,
+        showClose: true,
+        buttons: [],
+        onClose: null
     },
 
 
     /**
-     * @param options
+     * Инициализация
+     * @param {object} options
      */
     init: function (options) {
 
-        this._options = $.extend({}, this._options, options);
+        this._options = $.extend(true, {}, this._options, options);
+        this._id      = typeof this._options.id === 'string' && this._options.id
+            ? this._options.id
+            : coreuiNoticeUtils.hashCode();
 
-        if ( ! this._options.id) {
-            this._options.id = CoreUI.notice._hashCode();
+        // Инициализация контролов
+        if (this._options.hasOwnProperty('buttons') &&
+            Array.isArray(this._options.buttons) &&
+            this._options.buttons.length > 0
+        ) {
+            coreuiNoticePrivate.initButtons(this, this._options.buttons);
         }
     },
 
 
     /**
-     * @returns {string}
+     * Сборка уведомления
      */
-    render: function() {
+    render: function () {
 
-        let stylesContainer = this._options.bgColor
-            ? 'style="background-color: ' + this._options.bgColor + '"'
-            : '';
+        let styles = [];
 
-        let stylesMessage = this._options.messageColor
-            ? 'style="color: ' + this._options.messageColor + '"'
-            : '';
+        if (typeof this._options.textColor === 'string' && this._options.textColor) {
+            styles.push('color:' + this._options.textColor + ' !important');
+        }
+        if (typeof this._options.bgColor === 'string' && this._options.bgColor) {
+            styles.push('background-color:' + this._options.bgColor + ' !important');
+        }
 
-        let tplIcon = this._options.icon
-            ? '<div class="coreui-notice-icon"><i class="' + this._options.icon + '" ' + stylesMessage + '></i></div>'
-            : '';
+        let typeClasses = 'bg-dark text-bg-dark';
 
-        let tplBtnAction = this._options.actionBtnText
-            ? '<button type="button" class="coreui-notice-action" ' + stylesMessage + '>' + this._options.actionBtnText + '</button>'
-            : '';
-
-        let tplBtnCancel = this._options.cancelBtn
-            ? '<div class="coreui-notice-cancel"><div class="coreui-notice-cancel-icon "></div></div>'
-            : '';
-
-        let tpl =
-            '<div class="coreui-notice animated fadeIn" id="coreui-notice-' + this._options.id + '">' +
-                '<div class="coreui-notice-wrapper" ' + stylesContainer + '>' +
-                    tplIcon +
-                    '<span class="coreui-notice-message" ' + stylesMessage + '>' + this._options.message + '</span>' +
-                    tplBtnAction +
-                    tplBtnCancel +
-                '</div>' +
-            '</div>';
+        if (typeof this._options.type === 'string' && this._options.type) {
+            switch (this._options.type) {
+                case 'danger':    typeClasses = 'bg-danger text-bg-danger'; break;
+                case 'warning':   typeClasses = 'bg-warning text-bg-warning'; break;
+                case 'success':   typeClasses = 'bg-success text-bg-success'; break;
+                case 'info':      typeClasses = 'bg-info text-bg-info'; break;
+                case 'primary':   typeClasses = 'bg-primary text-bg-primary'; break;
+                case 'secondary': typeClasses = 'bg-secondary text-bg-secondary'; break;
+            }
+        }
 
 
-        return tpl;
-    },
+        let notice = $(
+            ejs.render(coreuiNoticeTpl['container.html'], {
+                id: this.getId(),
+                typeClasses: typeClasses,
+                styles: styles.length ? ' ' + styles.join(';') : '',
+                message: this._options.message,
+                icon: this._options.icon,
+                buttons: this._buttons,
+                showClose: this._options.showClose,
+            })
+        );
 
-
-    /**
-     *
-     */
-    initEvents: function () {
-
-        let that   = this;
-        let notice = $('#coreui-notice-' + this._options.id);
+        let that = this;
 
         $('.coreui-notice-cancel', notice).click(function () {
             that.hide();
         });
 
-        if (typeof this._options.onAction === 'function') {
-            if (notice[0]) {
-                $('.coreui-notice-action', notice).click(function () {
-                    that._options.onAction(that);
-                });
-            }
+
+        if (Array.isArray(that._buttons) && that._buttons.length > 0) {
+            $.each(that._buttons, function (key, button) {
+                if (typeof button.onclick === 'function') {
+                    $('.btn-notice-' + button.id, notice).click(function () {
+                        button.onclick.apply(that);
+                    });
+                }
+            });
         }
 
 
         if (this._options.timeout > 0) {
-            window.setTimeout(function () {
+            setTimeout(function () {
                 that.hide();
             }, this._options.timeout);
         }
+
+        return notice;
     },
 
 
     /**
-     *
-     */
-    getId: function () {
-        return this._options.id;
-    },
-
-
-    /**
-     * @param message
-     * @returns {string}
-     */
-    setMessage: function (message) {
-
-        let notice = $('#coreui-notice-' + this._options.id);
-
-        if (notice[0]) {
-            $('.coreui-notice-message', notice).text(message);
-        }
-    },
-
-
-    /**
-     *
+     * Скрытие уведомления
      */
     hide: function () {
 
-        let notice = $('#coreui-notice-' + this._options.id);
+        let noticeId = this.getId();
+        let notice   = $('#coreui-notice-' + noticeId);
 
         if (notice[0]) {
             notice.removeClass("fadeIn");
             notice.addClass("fadeOut");
 
-            if (typeof this._options.onClose === 'function') {
-                this._options.onClose();
-            }
-
             let that = this;
 
-            window.setTimeout(function() {
+            setTimeout(function() {
                 let container = notice.parent();
 
                 notice.remove();
 
-                if (typeof that._options.onClosed === 'function') {
-                    that._options.onClosed();
+                if (typeof that._options.onClose === 'function') {
+                    that._options.onClose();
                 }
 
                 if (container.children().length === 0) {
@@ -151,5 +141,30 @@ CoreUI.notice.instance = {
                 }
             }, 200);
         }
+    },
+
+
+    /**
+     * Получение id
+     */
+    getId: function () {
+        return this._id;
+    },
+
+
+    /**
+     * Изменение текста уведомления
+     * @param {string} message
+     * @returns {string}
+     */
+    setMessage: function (message) {
+
+        let notice = $('#coreui-notice-' + this.getId());
+
+        if (notice[0]) {
+            $('.coreui-notice-message', notice).text(message);
+        }
     }
 }
+
+export default coreuiNoticeInstance;
