@@ -99,6 +99,9 @@
                                 <button class="btn btn-sm btn-secondary" id="notice-default">Default</button>
                                 <button class="btn btn-sm btn-warning" id="notice-warning">Warning</button>
                                 <button class="btn btn-sm btn-danger" id="notice-danger">Danger</button>
+                                <button class="btn btn-sm btn-info" id="notice-info">Info</button>
+                                <button class="btn btn-sm btn-primary" id="notice-primary">Primary</button>
+                                <button class="btn btn-sm btn-secondary" id="notice-secondary">Secondary</button>
                                 <button class="btn btn-sm btn-success" id="notice-success">Success</button>
                             </div>
                             <div class="content-markup">
@@ -106,11 +109,14 @@
     &lt;button class="btn btn-sm btn-secondary" id="notice-default"&gt;Default&lt;/button&gt;
     &lt;button class="btn btn-sm btn-warning" id="notice-warning"&gt;Warning&lt;/button&gt;
     &lt;button class="btn btn-sm btn-danger" id="notice-danger"&gt;Danger&lt;/button&gt;
+    &lt;button class="btn btn-sm btn-info" id="notice-info"&gt;Info&lt;/button&gt;
+    &lt;button class="btn btn-sm btn-primary" id="notice-primary"&gt;Primary&lt;/button&gt;
+    &lt;button class="btn btn-sm btn-secondary" id="notice-secondary"&gt;Secondary&lt;/button&gt;
     &lt;button class="btn btn-sm btn-success" id="notice-success"&gt;Success&lt;/button&gt;
 
     &lt;script&gt;
         $('#notice-default').click(function () {
-            CoreUI.notice.info("Hello, world! This is a toast message.");
+            CoreUI.notice.default("Hello, world! This is a toast message.");
         });
 
         $('#notice-warning').click(function () {
@@ -119,6 +125,18 @@
 
         $('#notice-danger').click(function () {
             CoreUI.notice.danger("Hello, world! This is a toast message.");
+        });
+
+        $('#notice-info').click(function () {
+            CoreUI.notice.info("Hello, world! This is a toast message.");
+        });
+
+        $('#notice-primary').click(function () {
+            CoreUI.notice.primary("Hello, world! This is a toast message.");
+        });
+
+        $('#notice-secondary').click(function () {
+            CoreUI.notice.secondary("Hello, world! This is a toast message.");
         });
 
         $('#notice-success').click(function () {
@@ -152,22 +170,22 @@
 
     &lt;script&gt;
         $('#notice-position-top-left').click(function () {
-            CoreUI.notice.info("Hello, world! This is a toast message.", { position: 'top-left' });
+            CoreUI.notice.default("Hello, world! This is a toast message.", { position: 'top-left' });
         });
         $('#notice-position-top-center').click(function () {
-            CoreUI.notice.info("Hello, world! This is a toast message.", { position: 'top-center' });
+            CoreUI.notice.default("Hello, world! This is a toast message.", { position: 'top-center' });
         });
         $('#notice-position-top-right').click(function () {
-            CoreUI.notice.info("Hello, world! This is a toast message.", { position: 'top-right' });
+            CoreUI.notice.default("Hello, world! This is a toast message.", { position: 'top-right' });
         });
         $('#notice-position-bottom-left').click(function () {
-            CoreUI.notice.info("Hello, world! This is a toast message.", { position: 'bottom-left' });
+            CoreUI.notice.default("Hello, world! This is a toast message.", { position: 'bottom-left' });
         });
         $('#notice-position-bottom-center').click(function () {
-            CoreUI.notice.info("Hello, world! This is a toast message.", { position: 'bottom-center' });
+            CoreUI.notice.default("Hello, world! This is a toast message.", { position: 'bottom-center' });
         });
         $('#notice-position-bottom-right').click(function () {
-            CoreUI.notice.info("Hello, world! This is a toast message.", { position: 'bottom-right' });
+            CoreUI.notice.default("Hello, world! This is a toast message.", { position: 'bottom-right' });
         });
     &lt;/script&gt;
                                 </code></pre>
@@ -194,12 +212,12 @@
     &lt;script&gt;
         $('#notice-custom-colors').click(function () {
             CoreUI.notice.info("Hello, world! This is a toast message.", {
-                messageColor: '#ffffffd9',
+                textColor: '#ffffffd9',
                 bgColor: '#712cf9',
             });
         });
         $('#notice-icon-info').click(function () {
-            CoreUI.notice.info("Hello, world! This is a toast message.", { icon: 'bi bi-info' });
+            CoreUI.notice.default("Hello, world! This is a toast message.", { icon: 'bi bi-info' });
         });
         $('#notice-icon-check').click(function () {
             CoreUI.notice.success("Hello, world! This is a toast message.", { icon: 'bi bi-check' });
@@ -227,22 +245,27 @@
 
     &lt;script&gt;
         $('#notice-actions-btn').click(function () {
-            CoreUI.notice.info("Hello, world! This is a toast message.", {
-                actionBtnText: 'Повторить',
-                onAction: function (notice) {
-                    notice.hide();
-                    CoreUI.notice.success("Hello, world! This is a toast message.");
-                },
-                onClose: function () {
-                    console.log('close')
-                },
-                onClosed: function () {
-                    console.log('closed')
-                }
+            CoreUI.notice.default("Hello, world! This is a toast message.", {
+                buttons: [
+                    {
+                        text: 'Button 1',
+                        onclick: function () {
+                            this.hide();
+                            CoreUI.notice.success("Hello, world! This is a toast message.");
+                        }
+                    },
+                    {
+                        text: 'Button 2',
+                        onclick: function () {
+                            this.hide();
+                        }
+                    }
+                ],
+                onClose: function () { console.log('close') }
             });
         });
         $('#notice-actions-timer').click(function () {
-            let notice = CoreUI.notice.info("Timer: 5", {
+            let notice = CoreUI.notice.default("Timer: 5", {
                 timeout: 0
             });
 
@@ -294,11 +317,11 @@
                                 <td>Текст сообщения</td>
                             </tr>
                             <tr>
-                                <th>messageColor</th> <td>string</td> <td></td>
+                                <th>textColor</th> <td>string</td> <td></td>
                                 <td>Цвет текста в сообщении</td>
                             </tr>
                             <tr>
-                                <th>bgColor</th> <td>string</td> <td>#333</td>
+                                <th>bgColor</th> <td>string</td> <td>#000</td>
                                 <td>Цвет фона сообщения</td>
                             </tr>
                             <tr>
@@ -306,24 +329,12 @@
                                 <td>Класс для установки иконки для сообщения</td>
                             </tr>
                             <tr>
-                                <th>actionBtnText</th> <td>string</td> <td></td>
-                                <td>Тест для кнопки с действием</td>
-                            </tr>
-                            <tr>
-                                <th>cancelBtn</th> <td>bool</td> <td>true</td>
-                                <td>Наличие кнопки закрытия уведомления</td>
+                                <th>buttons</th> <td>array</td> <td></td>
+                                <td><code>{ text: 'Button1', onclick: function() {} }</code> Тест для кнопки с действием</td>
                             </tr>
                             <tr>
                                 <th>onClose</th> <td>function</td> <td></td>
-                                <td>Событие при начале закрытия уведомления</td>
-                            </tr>
-                            <tr>
-                                <th>onClosed</th> <td>function</td> <td></td>
-                                <td>Событие при завершении закрытия уведомления</td>
-                            </tr>
-                            <tr>
-                                <th>onAction</th> <td>function</td> <td></td>
-                                <td>Событие при нажатии на кнопку действия</td>
+                                <td>Событие при закрытии уведомления</td>
                             </tr>
                             </tbody>
                         </table>
@@ -331,38 +342,71 @@
 
 
                     <h2 id="methods" class="section-margin">Methods</h2>
-                    <div>
-                        <code>let notice = CoreUI.notice.info( message, options )</code>
-                        <p>Показ сообщения</p>
-
-                        <code>let notice = CoreUI.notice.warning( message, options )</code>
-                        <p>Показ сообщения c предупреждением</p>
-
-                        <code>let notice = CoreUI.notice.danger( message, options )</code>
-                        <p>Показ сообщения с критическим предупреждением</p>
-
-                        <code>let notice = CoreUI.notice.success( message, options )</code>
-                        <p>Показ сообщения с положительным событием</p>
-
-                        <code>let notice = CoreUI.notice.get( id )</code>
-                        <p>Получение сообщения по его id</p>
-
-                        <code>notice.getId()</code>
-                        <p>Получение id сообщения</p>
-
-                        <code>notice.setMessage( message )</code>
-                        <p>Установка нового текста сообщения</p>
-
-                        <code>notice.hide()</code>
-                        <p>Закрытие сообщения</p>
-
-                        <code>CoreUI.settings( options )</code>
-                        <p>Установка настроек по умолчанию для сообщений</p>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped js-options-table">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Return</th>
+                                <th>Description</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>CoreUI.notice.default( message, options )</td> <td>object</td>
+                                <td>Показ сообщения</td>
+                            </tr>
+                            <tr>
+                                <td>CoreUI.notice.warning( message, options )</td> <td>object</td>
+                                <td>Показ сообщения c предупреждением</td>
+                            </tr>
+                            <tr>
+                                <td>CoreUI.notice.danger( message, options )</td> <td>object</td>
+                                <td>Показ сообщения с критическим предупреждением</td>
+                            </tr>
+                            <tr>
+                                <td>CoreUI.notice.success( message, options )</td> <td>object</td>
+                                <td>Показ сообщения с положительным событием</td>
+                            </tr>
+                            <tr>
+                                <td>CoreUI.notice.info( message, options )</td> <td>object</td>
+                                <td>Показ сообщения info</td>
+                            </tr>
+                            <tr>
+                                <td>CoreUI.notice.primary( message, options )</td> <td>object</td>
+                                <td>Показ сообщения primary</td>
+                            </tr>
+                            <tr>
+                                <td>CoreUI.notice.secondary( message, options )</td> <td>object</td>
+                                <td>Показ сообщения secondary</td>
+                            </tr>
+                            <tr>
+                                <td>CoreUI.notice.get( id )</td> <td>object</td>
+                                <td>Получение уведомления по id</td>
+                            </tr>
+                            <tr>
+                                <td>notice.getId()</td> <td>string</td>
+                                <td>Получение id сообщения</td>
+                            </tr>
+                            <tr>
+                                <td>notice.setMessage( message )</td> <td></td>
+                                <td>Установка нового текста сообщения</td>
+                            </tr>
+                            <tr>
+                                <td>notice.hide()</td> <td></td>
+                                <td>Закрытие сообщения</td>
+                            </tr>
+                            <tr>
+                                <td>CoreUI.setSettings( options )</td> <td></td>
+                                <td>Установка настроек по умолчанию для сообщений <code>{ limit: 3, top: 50, bottom: 50, position: 'top-right', container: 'body' }</code></td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
 
 
                     <h2 id="settings" class="section-margin">Settings</h2>
-                    <p>Настройки по умолчанию</p>
+                    <p>Настройки контейнера</p>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped js-options-table">
                             <thead>
@@ -394,37 +438,61 @@
                                 <th>container</th> <td>string</td> <td>body</td>
                                 <td>Контейнер для создания уведомлений</td>
                             </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <p>Настройки уведомления</p>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped js-options-table">
+                            <thead>
                             <tr>
-                                <th>infoColor</th> <td>string</td> <td></td>
-                                <td>Цвет текста для информационных сообщений</td>
+                                <th>Name</th>
+                                <th>type</th>
+                                <th>default</th>
+                                <th>description</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>id</th> <td>string</td> <td></td>
+                                <td>Идентификатор уведомления</td>
                             </tr>
                             <tr>
-                                <th>infoBgColor</th> <td>string</td> <td></td>
-                                <td>Цвет фона для информационных сообщений</td>
+                                <th>type</th> <td>string</td> <td>default</td>
+                                <td>Вид уведомления</td>
                             </tr>
                             <tr>
-                                <th>warningColor</th> <td>string</td> <td>#000000</td>
-                                <td>Цвет текста для сообщений с предупреждением</td>
+                                <th>timeout</th> <td>number</td> <td>6000</td>
+                                <td>Количество миллисекунд до закрытия уведомления</td>
                             </tr>
                             <tr>
-                                <th>warningBgColor</th> <td>string</td> <td>#ffc107</td>
-                                <td>Цвет фона для сообщений с предупреждением</td>
+                                <th>message</th> <td>string</td> <td></td>
+                                <td>Текст уведомления</td>
                             </tr>
                             <tr>
-                                <th>dangerColor</th> <td>string</td> <td></td>
-                                <td>Цвет текста для критических сообщений</td>
+                                <th>textColor</th> <td>string</td> <td></td>
+                                <td>Цвет текста уведомления</td>
                             </tr>
                             <tr>
-                                <th>dangerBgColor</th> <td>string</td> <td>#dc3545</td>
-                                <td>Цвет фона для критических сообщений</td>
+                                <th>bgColor</th> <td>string</td> <td></td>
+                                <td>Цвет фона уведомления</td>
                             </tr>
                             <tr>
-                                <th>successColor</th> <td>string</td> <td></td>
-                                <td>Цвет текста для успешных сообщений</td>
+                                <th>icon</th> <td>string</td> <td></td>
+                                <td>css класс для отображения иконки</td>
                             </tr>
                             <tr>
-                                <th>successBgColor</th> <td>string</td> <td>#198754</td>
-                                <td>Цвет фона для успешных сообщений</td>
+                                <th>showClose</th> <td>bool</td> <td>true</td>
+                                <td>Признак отображения иконки закрытия</td>
+                            </tr>
+                            <tr>
+                                <th>buttons</th> <td>array</td> <td></td>
+                                <td>Кнопки которые необходимо отобразить в уведомлении</td>
+                            </tr>
+                            <tr>
+                                <th>onClose</th> <td>function</td> <td></td>
+                                <td>Событие происходящее в момент закрытия</td>
                             </tr>
                             </tbody>
                         </table>
