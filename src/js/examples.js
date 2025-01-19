@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
     $('#notice-custom-colors').click(function () {
         CoreUI.notice.info("Hello, world! This is a toast message.", {
             textColor: '#ffffffd9',
-            bgColor: '#712cf9',
+            bgColor: '#712cf9'
         });
     });
     $('#notice-icon-info').click(function () {
@@ -90,6 +90,7 @@ document.addEventListener('DOMContentLoaded', function () {
             onClose: function () { console.log('close') }
         });
     });
+
     $('#notice-actions-timer').click(function () {
         let notice = CoreUI.notice.default("Timer: 5", {
             timeout: 0
@@ -108,8 +109,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-    // Code highlight
-    $('pre code').each(function(i, block) {
-        hljs.highlightBlock(block);
+    // Description
+    $('#notice-description').click(function () {
+        CoreUI.notice.default("Hello, world! This is a toast message.", {
+            description:
+                "Raw denim you probably haven't heard of them jean shorts Austin. " +
+                "Nesciunt tofu stumptown aliqua, retro synth master cleanse. " +
+                'Mustache cliche tempor, williamsburg carles vegan helvetica. ' +
+                'Reprehenderit butcher retro keffiyeh dreamcatcher synth. ' +
+                'Cosby sweater eu banh mi, qui irure terry richardson ex squid. ' +
+                '\n\n' +
+                'Aliquip placeat salvia cillum iphone. \n' +
+                'Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.'
+        });
+    });
+
+    $('#notice-description2').click(function () {
+        CoreUI.notice.default("Hello, world! This is a toast message.", {
+            description: 'Raw denim you probably haven\'t heard of them jean shorts Austin'
+        });
     });
 });

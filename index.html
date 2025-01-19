@@ -42,6 +42,22 @@
                                     </ul>
 
                                     <ul class="nav navbar-nav navbar-right">
+                                        <li class="nav-item dropdown" id="page-theme">
+                                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                                                <i class="bi bi-sun"></i>
+                                            </a>
+                                            <ul class="dropdown-menu dropdown-menu-end">
+                                                <li>
+                                                    <button type="button" class="dropdown-item" data-bs-theme-value="light">
+                                                        <i class="bi bi-sun"></i> light
+                                                    </button>
+                                                <li>
+                                                    <button type="button" class="dropdown-item" data-bs-theme-value="dark">
+                                                        <i class="bi bi-moon-stars"></i> Dark
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </li>
                                         <li class="nav-item"><a class="nav-link" href="https://github.com/n2ref/coreui-notice">GitHub</a></li>
                                     </ul>
                                 </div>
@@ -61,11 +77,13 @@
                                     <li><a href="#example-positions-options">Positions</a></li>
                                     <li><a href="#example-styles-options">Styles</a></li>
                                     <li><a href="#example-actions">Actions</a></li>
+                                    <li><a href="#example-description">Description</a></li>
                                 </ul>
                             </li>
                             <li><a href="#options">Options</a></li>
                             <li><a href="#methods">Methods</a></li>
                             <li><a href="#settings">Settings</a></li>
+                            <li><a href="#sass-variables">Sass variables</a></li>
                         </ul>
                     </div>
                 </div>
@@ -264,6 +282,7 @@
                 onClose: function () { console.log('close') }
             });
         });
+
         $('#notice-actions-timer').click(function () {
             let notice = CoreUI.notice.default("Timer: 5", {
                 timeout: 0
@@ -278,6 +297,42 @@
                     clearInterval(intervalId);
                 }
             }, 1000);
+        });
+    &lt;/script&gt;
+                                </code></pre>
+                            </div>
+                        </div>
+
+
+                        <div id="example-description" class="mb-4">
+                            <h3>Description</h3>
+                            <div class="content-example">
+                                <button class="btn btn-sm btn-secondary" id="notice-description">Long description</button>
+                                <button class="btn btn-sm btn-secondary" id="notice-description2">Small description</button>
+                            </div>
+                            <div class="content-markup">
+                                <pre><code class="html">
+    &lt;button class="btn btn-sm btn-secondary" id="notice-description"&gt;Long notice&lt;/button&gt;
+
+    &lt;script&gt;
+        $('#notice-description').click(function () {
+            CoreUI.notice.default("Hello, world! This is a toast message.", {
+                description:
+                    "Raw denim you probably haven't heard of them jean shorts Austin. " +
+                    "Nesciunt tofu stumptown aliqua, retro synth master cleanse. " +
+                    'Mustache cliche tempor, williamsburg carles vegan helvetica. ' +
+                    'Reprehenderit butcher retro keffiyeh dreamcatcher synth. ' +
+                    'Cosby sweater eu banh mi, qui irure terry richardson ex squid. ' +
+                    '\n\n' +
+                    'Aliquip placeat salvia cillum iphone. \n' +
+                    'Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.'
+            });
+        });
+
+        $('#notice-description2').click(function () {
+            CoreUI.notice.default("Hello, world! This is a toast message.", {
+                description: 'Raw denim you probably haven\'t heard of them jean shorts Austin'
+            });
         });
     &lt;/script&gt;
                                 </code></pre>
@@ -471,6 +526,10 @@
                                     <td>Текст уведомления</td>
                                 </tr>
                                 <tr>
+                                    <th>description</th> <td>string</td> <td></td>
+                                    <td>Текст описания сообщения</td>
+                                </tr>
+                                <tr>
                                     <th>textColor</th> <td>string</td> <td></td>
                                     <td>Цвет текста уведомления</td>
                                 </tr>
@@ -496,6 +555,17 @@
                                 </tr>
                                 </tbody>
                             </table>
+                        </div>
+
+
+                        <div id="sass-variables" class="mb-5">
+                            <h2 class="section-margin">Sass variables</h2>
+                            <div class="content-markup">
+                            <pre><code>
+    --coreui-notice-default-bg: rgba(var(--bs-dark-rgb));
+    --coreui-notice-default-color: #fff;
+                            </code></pre>
+                            </div>
                         </div>
                     </div>
                 </div>
