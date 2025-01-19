@@ -5,13 +5,13 @@ let coreuiNoticePrivate = {
 
     /**
      * Инициализация кнопок
-     * @param {Object} notice
-     * @param {Array}  buttons
+     * @param {coreuiNoticeInstance} notice
+     * @param {Array}                buttons
      * @private
      */
     initButtons: function (notice, buttons) {
 
-        $.each(buttons, function (key, button) {
+        buttons.map(function (button) {
 
             if (coreuiNoticeUtils.isObject(button) && typeof button.text === 'string') {
                 let id = button.hasOwnProperty('id') && typeof button.id === 'string' && button.id

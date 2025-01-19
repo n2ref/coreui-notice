@@ -1,26 +1,49 @@
 
 <div class="coreui-notice animated fadeIn" id="coreui-notice-<%= id %>">
-    <div class="coreui-notice-wrapper <%= typeClasses %>"<% if (styles) { %>style="<%= styles %>"<% } %>>
-        <% if (icon) { %>
-        <div class="coreui-notice-icon">
-            <i class="<%= icon %>"></i>
-        </div>
-        <% } %>
+    <div class="coreui-notice-wrapper shadow <%= typeClasses %>"<% if (styles) { %>style="<%= styles %>"<% } %>>
 
-        <span class="coreui-notice-message"><%= message %></span>
+        <div class="d-flex flex-row justify-content-between">
+            <div class="d-flex flex-column flex-grow-1">
+                <div class="coreui-notice-message">
+                    <% if (icon) { %>
+                    <span class="coreui-notice-icon">
+                        <i class="<%= icon %>"></i>
+                    </span>
+                    <% } %>
+                    <%= message %>
+                </div>
 
-        <% if (buttons.length > 0) { %>
-        <div class="coreui-notice-buttons">
-            <% $.each(buttons, function(key, button) { %>
-            <button type="button" class="coreui-notice-btn btn-notice-<%= button.id %>"><%= button.text %></button>
-            <% }); %>
-        </div>
-        <% } %>
+                <% if (description) { %>
+                <div class="coreui-notice-description">
+                    <%- description %>
+                </div>
+                <% } %>
 
-        <% if (showClose) { %>
-        <div class="coreui-notice-cancel">
-            <div class="coreui-notice-cancel-icon">×</div>
+                <% if (buttons.length > 0) { %>
+                <div class="coreui-notice-buttons">
+                    <% $.each(buttons, function(key, button) { %>
+                    <button type="button" class="coreui-notice-btn btn-notice-<%= button.id %>"><%= button.text %></button>
+                    <% }); %>
+                </div>
+                <% } %>
+            </div>
+
+            <% if (showClose || description) { %>
+            <div class="d-flex flex-column align-items-start">
+                <% if (showClose) { %>
+                <div class="coreui-notice-cancel mb-auto">
+                    <div class="coreui-notice-cancel-icon">×</div>
+                </div>
+                <% } %>
+
+                <% if (description) { %>
+                <div class="coreui-notice-expand">
+                    <i class="coreui-notice-expand-icon bi bi-chevron-down"></i>
+                </div>
+                <% } %>
+            </div>
+            <% } %>
         </div>
-        <% } %>
+
     </div>
 </div>

@@ -210,10 +210,7 @@ let coreuiNotice = {
         }
 
 
-        let instance = $.extend(true, {}, coreuiNoticeInstance);
-        instance.init(options instanceof Object ? options : {});
-
-
+        let instance = new coreuiNoticeInstance(options instanceof Object ? options : {});
 
         if ( ! this._positions.hasOwnProperty(position)) {
             this._positions[position] = [];
@@ -226,9 +223,9 @@ let coreuiNotice = {
 
 
         if (['bottom-left', 'bottom-center', 'bottom-right'].indexOf(position) >= 0) {
-            container.prepend(instance.render());
+            container.prepend(instance.show());
         } else {
-            container.append(instance.render());
+            container.append(instance.show());
         }
 
         return instance;

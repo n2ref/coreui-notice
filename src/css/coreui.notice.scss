@@ -1,3 +1,11 @@
+:root {
+    --coreui-notice-default-bg: rgba(var(--bs-dark-rgb));
+    --coreui-notice-default-color: #fff;
+}
+[data-bs-theme='dark'] {
+    --coreui-notice-default-bg: rgba(var(--bs-secondary-bg-rgb));
+    --coreui-notice-default-color: #fff;
+}
 
 .coreui-notice-container {
     position: fixed;
@@ -28,7 +36,6 @@
 
     .coreui-notice {
         .coreui-notice-wrapper {
-            box-shadow: 0 1px 3px 0 rgba(60, 64, 67, 0.302), 0 4px 8px 3px rgba(60, 64, 67, 0.149);
             -webkit-font-smoothing: antialiased;
             font-family: Roboto, RobotoDraft, Helvetica, Arial, sans-serif;
             font-size: 14px;
@@ -46,46 +53,36 @@
             font-weight: 400;
             left: 0;
             margin: 6px 12px;
-            max-width: 670px;
-            min-height: 46px;
+            max-width: 400px;
+            min-height: 45px;
             padding: 6px 12px;
             position: relative;
             right: auto;
             text-align: left;
             top: auto;
             white-space: normal;
-            background-color: #362f2f;
-            color: #fff;
+            background-color: var(--coreui-notice-default-bg);
+            color: var(--coreui-notice-default-color);
         }
-
         .coreui-notice-icon {
-            position: relative;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 8px;
-            font-size: 16px;
-            font-weight: 400;
+            vertical-align: middle
         }
         .coreui-notice-icon i {
             font-size: 1.25rem;
         }
         .coreui-notice-message {
-            margin: 7px 24px 7px 0;
-            max-width: 260px;
+            margin: 6px 24px 5px 0;
+            line-height: 20px;
         }
         .coreui-notice-buttons  {
             display: flex;
             gap: 10px;
+            margin-bottom: 5px;
 
             .coreui-notice-btn  {
                 background: none;
                 border: none;
-                margin-left: -10px;
-                font-weight: 600;
+                font-weight: 500;
                 align-items: center;
                 display: inline-flex;
                 justify-content: center;
@@ -98,7 +95,7 @@
                 border-radius: 4px;
                 box-sizing: border-box;
                 cursor: pointer;
-                height: 34px;
+                height: 30px;
                 color: inherit;
                 min-width: auto;
                 padding: 0 8px;
@@ -140,7 +137,7 @@
             cursor: pointer;
             position: relative;
             margin-left: 15px;
-            margin-top: 8px;
+            margin-top: 7px;
 
             &::before {
                 content: '';
@@ -181,6 +178,35 @@
                 width: 20px;
                 opacity: .7;
                 font-size: 24px;
+                line-height: 22px;
+                text-align: center;
+            }
+        }
+        .coreui-notice-description {
+            max-height: 55px;
+            overflow: hidden;
+            font-size: 0.75rem;
+            margin-bottom: 5px;
+        }
+        .coreui-notice-description.expand {
+            max-height: 150px;
+            overflow: auto;
+        }
+        .coreui-notice-expand {
+            display: flex;
+            z-index: 0;
+            cursor: pointer;
+            margin-left: 15px;
+            margin-bottom: 8px;
+            opacity: .7;
+
+            &:hover {
+                opacity: 1;
+            }
+
+            .coreui-notice-expand-icon {
+                height: 20px;
+                width: 20px;
                 line-height: 22px;
                 text-align: center;
             }
